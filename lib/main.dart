@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:newproject/feature/daily_news/presentation/provider/article/local/local_article_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:newproject/injection_container.dart';
 import 'package:newproject/feature/daily_news/presentation/provider/article/remote/remote_article_provider.dart';
-import 'package:newproject/feature/daily_news/presentation/pages/daily_news.dart';
+import 'package:newproject/feature/daily_news/presentation/pages/home/daily_news.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,8 +16,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => sl<RemoteArticleProvider>(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => sl<RemoteArticleProvider>()),
+        ChangeNotifierProvider(create: (_) => sl<LocalArticleProvider>()),
+      ],
       child: MaterialApp(
         title: 'News App',
         theme: ThemeData(primarySwatch: Colors.blue),
