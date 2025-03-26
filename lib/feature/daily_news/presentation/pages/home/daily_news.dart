@@ -16,6 +16,7 @@ class DailyNews extends StatelessWidget {
   }
 
   _buildAppBar(BuildContext context) {
+    print('buildAppBar');
     return AppBar(
       title: const Text('Daily News'),
       actions: [

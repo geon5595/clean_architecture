@@ -1,9 +1,7 @@
-import 'package:floor/floor.dart';
 import 'package:newproject/feature/daily_news/domain/entities/article.dart';
 
-@Entity(tableName: 'article')
+
 class ArticleModel {
-  @PrimaryKey(autoGenerate: true)
   final int? id;
   final String? author;
   final String? title;

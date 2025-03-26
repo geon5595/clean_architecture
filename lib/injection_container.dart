@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:newproject/core/constants/constant.dart';
-import 'package:newproject/feature/daily_news/data/data_sources/local/app_database.dart';
+import 'package:newproject/feature/daily_news/data/data_sources/local/database_connection.dart';
+import 'package:newproject/feature/daily_news/data/data_sources/local/moor_database.dart';
 import 'package:newproject/feature/daily_news/data/data_sources/remote/news_api_service.dart';
 import 'package:newproject/feature/daily_news/data/repository/article_repository_impl.dart';
 import 'package:newproject/feature/daily_news/domain/repository/article_repository.dart';
@@ -15,17 +16,16 @@ import 'package:newproject/feature/daily_news/presentation/provider/article/remo
 final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
-  final database =
-      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  // Database
+  final database = AppDatabase(openConnection());
   sl.registerSingleton<AppDatabase>(database);
+
   // Dio
   final dio = Dio(BaseOptions(baseUrl: newsApiBaseUrl));
-
   sl.registerSingleton<Dio>(dio);
 
   // Dependencies
   sl.registerSingleton<NewsApiService>(NewsApiService(sl()));
-
   sl.registerSingleton<ArticleRepository>(ArticleRepositoryImpl(sl(), sl()));
 
   // UseCases

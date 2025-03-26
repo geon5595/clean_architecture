@@ -58,7 +58,6 @@ class _NewsApiService implements NewsApiService {
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
-    print(httpResponse.data);
     return httpResponse;
   }
 

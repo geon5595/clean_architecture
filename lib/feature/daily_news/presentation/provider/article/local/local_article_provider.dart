@@ -47,7 +47,7 @@ class LocalArticleProvider extends ChangeNotifier {
     notifyListeners();
 
     await _removeArticleUseCase(params: event.article);
-    notifyListeners();
+    await onGetSavedArticles();
   }
 
   Future<void> onSaveArticle(SaveArticle event) async {
@@ -55,6 +55,6 @@ class LocalArticleProvider extends ChangeNotifier {
     notifyListeners();
 
     await _saveArticleUseCase(params: event.article);
-    notifyListeners();
+    await onGetSavedArticles();
   }
 }

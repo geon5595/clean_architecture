@@ -31,5 +31,6 @@
             "type": "image/png",
             "purpose": "maskable"
         }
-    ]
+    ],
+    "sqlite3.wasm": "sql-wasm.wasm"
 }

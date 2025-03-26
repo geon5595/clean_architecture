@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:newproject/core/constants/constant.dart';
 import 'package:newproject/core/resources/data_state.dart';
-import 'package:newproject/feature/daily_news/data/data_sources/local/app_database.dart';
+import 'package:newproject/feature/daily_news/data/data_sources/local/moor_database.dart';
 import 'package:newproject/feature/daily_news/data/data_sources/remote/news_api_service.dart';
 import 'package:newproject/feature/daily_news/data/models/article.dart';
 import 'package:newproject/feature/daily_news/domain/entities/article.dart';
@@ -42,22 +42,18 @@ class ArticleRepositoryImpl implements ArticleRepository {
 
   @override
   Future<List<ArticleEntity>> getSavedArticles() {
-    return _appDatabase.articleDao.getArticles().then(
+    return _appDatabase.getAllArticles().then(
       (value) => value.map((e) => e.toEntity()).toList(),
     );
   }
 
   @override
   Future<void> removeArticle(ArticleEntity article) {
-    return _appDatabase.articleDao.deleteArticle(
-      ArticleModel.fromEntity(article),
-    );
+    return _appDatabase.deleteArticle(article.id!);
   }
 
   @override
   Future<void> saveArticle(ArticleEntity article) {
-    return _appDatabase.articleDao.insertArticle(
-      ArticleModel.fromEntity(article),
-    );
+    return _appDatabase.insertArticle(ArticleModel.fromEntity(article));
   }
 }
